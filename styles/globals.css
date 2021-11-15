@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+    .navBtn {
+        @apply hidden h-6 cursor-pointer transition-all duration-150 ease-out
+    }
+    .btn {
+        @apply h-7 cursor-pointer transition-all duration-150 ease-out
+    }
+}
+
+.musicopy {
+    margin-left: 2px !important;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+body {
+    background-color: #fff;
+}
+
+.border-ns {
+    border: none !important;
+}
