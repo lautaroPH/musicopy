@@ -137,7 +137,10 @@ const ModalGenre = () => {
                   <img
                     src={selectedFile}
                     className="w-full object-contain cursor-pointer"
-                    onClick={() => setselectedFile(null)}
+                    onClick={() => {
+                      setselectedFile(null);
+                      filePickerRef.current.value = null;
+                    }}
                     alt="selected image"
                   />
                 ) : (

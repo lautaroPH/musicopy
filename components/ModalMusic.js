@@ -1,10 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useContext, useEffect, useRef, useState } from 'react';
-import { CameraIcon, MicrophoneIcon } from '@heroicons/react/outline';
+import { CameraIcon, MicrophoneIcon, XIcon } from '@heroicons/react/outline';
 import {
   addDoc,
   collection,
   doc,
+  onSnapshot,
   serverTimestamp,
   updateDoc,
 } from '@firebase/firestore';
@@ -12,6 +13,7 @@ import { db, storage } from '../firebase';
 // import { useSession } from 'next-auth/react';
 import { getDownloadURL, ref, uploadString } from '@firebase/storage';
 import { ModalMusicContext } from '../context/ModalMusicContext';
+import { AudioPlayer } from './AudioPlayer';
 
 const initEvent = {
   title: '',
@@ -31,6 +33,7 @@ const ModalMusic = () => {
   const [selectedFile, setselectedFile] = useState(null);
   const [selectedFileArtist, setselectedFileArtist] = useState(null);
   const [formValues, setFormValues] = useState(initEvent);
+  const [genres, setGenres] = useState([]);
 
   const handleInputChange = ({ target }) => {
     setFormValues({
@@ -38,6 +41,14 @@ const ModalMusic = () => {
       [target.name]: target.value,
     });
   };
+
+  useEffect(
+    () =>
+      onSnapshot(collection(db, 'styles'), (snapshot) => {
+        setGenres(snapshot.docs);
+      }),
+    [db]
+  );
 
   const uploadGenre = async () => {
     if (loading) return;
@@ -112,7 +123,7 @@ const ModalMusic = () => {
 
   const addImageToArtist = (e) => {
     const file_extension = filePickerRefArtist?.current?.value
-      .split('\\')[2]
+      ?.split('\\')[2]
       .split('.')[1];
     if (
       file_extension === 'png' ||
@@ -182,14 +193,19 @@ const ModalMusic = () => {
             >
               <div>
                 {selectedFile ? (
-                  <audio
-                    src={selectedFile}
-                    controls
-                    onClick={() => setselectedFile(null)}
-                  />
+                  <div className="flex items-center">
+                    <AudioPlayer audioMusic={selectedFile} />
+                    <XIcon
+                      onClick={() => {
+                        setselectedFile(null);
+                        filePickerRef.current.value = null;
+                      }}
+                      className="h-10  cursor-pointer"
+                    />
+                  </div>
                 ) : (
                   <div
-                    onClick={() => filePickerRef.current.click()}
+                    onClick={() => filePickerRef?.current?.click()}
                     className="mx-auto flex items-center justify-center h-12 w-12 rounded-full
                       bg-red-100 cursor-pointer"
                   >
@@ -218,7 +234,7 @@ const ModalMusic = () => {
                       />
                     </div>
 
-                    <div className="mt-2 border-b-2">
+                    <div className="mt-2 border-t-2 border-b-2">
                       <input
                         className="border-none focus:ring-0 w-full text-center"
                         type="text"
@@ -244,8 +260,11 @@ const ModalMusic = () => {
                       {selectedFileArtist ? (
                         <img
                           src={selectedFileArtist}
-                          className="w-full object-contain cursor-pointer"
-                          onClick={() => setselectedFileArtist(null)}
+                          className="w-full h-60 object-contain cursor-pointer"
+                          onClick={() => {
+                            setselectedFileArtist(null);
+                            filePickerRefArtist.current.value = null;
+                          }}
                           alt="selected image"
                         />
                       ) : (
@@ -277,15 +296,17 @@ const ModalMusic = () => {
                       </div>
                       <div />
 
-                      <div className="mt-2 border-b-2">
-                        <input
-                          className="border-none focus:ring-0 w-full text-center"
-                          type="text"
+                      <div className="mt-2 border-t-2 border-b-2">
+                        <select
+                          name="genre"
+                          className="border-none p-3 focus:ring-0 w-full text-center"
                           ref={genreRef}
                           onChange={handleInputChange}
-                          name="genre"
-                          placeholder="Genero musical"
-                        />
+                        >
+                          {genres.map((genre) => (
+                            <option key={genre.id}>{genre.data().title}</option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                   </div>

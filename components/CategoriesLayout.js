@@ -10,39 +10,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const MUSICS = [
-  {
-    id: 1,
-    title: 'Rock',
-    img: 'https://www.marsicalive.it/wp-content/uploads/2019/09/musica-rock.jpg',
-  },
-  {
-    id: 2,
-    title: 'asd',
-    img: 'https://www.marsicalive.it/wp-content/uploads/2019/09/musica-rock.jpg',
-  },
-  {
-    id: 3,
-    title: 'Rock',
-    img: 'https://www.marsicalive.it/wp-content/uploads/2019/09/musica-rock.jpg',
-  },
-  {
-    id: 4,
-    title: 'Rock',
-    img: 'https://www.marsicalive.it/wp-content/uploads/2019/09/musica-rock.jpg',
-  },
-  {
-    id: 5,
-    title: 'electronica',
-    img: 'https://www.marsicalive.it/wp-content/uploads/2019/09/musica-rock.jpg',
-  },
-  {
-    id: 6,
-    title: 'pop',
-    img: 'https://www.marsicalive.it/wp-content/uploads/2019/09/musica-rock.jpg',
-  },
-];
-
 const CategoriesLayout = () => {
   const { setOpen } = useContext(ModalGenreContext);
   const [genres, setGenres] = useState([]);

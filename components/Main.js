@@ -6,7 +6,7 @@ import {
   PlayIcon,
 } from '@heroicons/react/outline';
 import { useEffect, useState } from 'react';
-import { collection, onSnapshot, query } from '@firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from '@firebase/firestore';
 import { db } from '../firebase';
 
 function classNames(...classes) {
@@ -27,9 +27,12 @@ const Main = () => {
 
   useEffect(
     () =>
-      onSnapshot(collection(db, 'musics'), (snapshot) => {
-        setMusics(snapshot.docs);
-      }),
+      onSnapshot(
+        query(collection(db, 'musics'), orderBy('timestamp', 'desc')),
+        (snapshot) => {
+          setMusics(snapshot.docs);
+        }
+      ),
     [db]
   );
 
