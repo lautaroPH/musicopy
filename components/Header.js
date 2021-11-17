@@ -5,9 +5,12 @@ import {
   //   MusicNoteIcon,
 } from '@heroicons/react/outline';
 import { HomeIcon, MusicNoteIcon } from '@heroicons/react/solid';
+import { useContext } from 'react';
+import { ModalMusicContext } from '../context/ModalMusicContext';
 import CategoriesLayout from './CategoriesLayout';
 
 const Header = () => {
+  const { setOpenModalMusic } = useContext(ModalMusicContext);
   return (
     <div className="shadow-sm border-b bg-white sticky top-0 z-50">
       <div className="flex justify-between max-w-6xl mx-5 xl:mx-auto">
@@ -46,7 +49,7 @@ const Header = () => {
           />
           <MenuIcon className="h-6 text-purple-600 md:hidden cursor-pointer" />
           <PlusCircleIcon
-            //   onClick={() => setOpen(true)}
+            onClick={() => setOpenModalMusic(true)}
             className="navBtn text-purple-600 md:inline-flex hover:scale-125"
           />
 

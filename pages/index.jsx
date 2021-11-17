@@ -1,5 +1,7 @@
 import Layout from '../components/Layout';
 import Main from '../components/Main';
+import ModalGenre from '../components/ModalGenre';
+import ModalMusic from '../components/ModalMusic';
 
 export default function Home() {
   return (
@@ -15,14 +17,14 @@ export default function Home() {
           <br />
           <p className="text-xs sm:text-sm flex justify-center -mt-4 mb-6 font-semibold text-purple-600">
             Disfrute de toda nuestra variedad
-            <audio controls>
-              <source src="../public/musica/emergency.mp3" type="audio/mp3" />
-            </audio>
           </p>
         </div>
         <div>
           <Main />
         </div>
+
+        <ModalGenre />
+        <ModalMusic />
       </div>
     </Layout>
   );
