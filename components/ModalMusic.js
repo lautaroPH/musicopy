@@ -26,12 +26,14 @@ const ModalMusic = () => {
   const { openModalMusic, setOpenModalMusic } = useContext(ModalMusicContext);
   const filePickerRef = useRef(null);
   const filePickerRefArtist = useRef(null);
+  const filePickerRefMusic = useRef(null);
   const titleRef = useRef(null);
   const artistRef = useRef(null);
   const genreRef = useRef(null);
   const [loading, setloading] = useState(false);
   const [selectedFile, setselectedFile] = useState(null);
   const [selectedFileArtist, setselectedFileArtist] = useState(null);
+  const [selectedFileMusic, setselectedFileMusic] = useState(null);
   const [formValues, setFormValues] = useState(initEvent);
   const [genres, setGenres] = useState([]);
 
@@ -78,13 +80,24 @@ const ModalMusic = () => {
         }
       );
 
-      const imageRef = ref(storage, `musics/${docRef.id}/image`);
+      const imageRefArtist = ref(storage, `musics/${docRef.id}/image`);
 
-      await uploadString(imageRef, selectedFileArtist, 'data_url').then(
+      await uploadString(imageRefArtist, selectedFileArtist, 'data_url').then(
         async (snapshot) => {
-          const downloadURL = await getDownloadURL(imageRef);
+          const downloadURL = await getDownloadURL(imageRefArtist);
           await updateDoc(doc(db, 'musics', docRef.id), {
             image: downloadURL,
+          });
+        }
+      );
+
+      const imageRefMusic = ref(storage, `musics/${docRef.id}/imageMusic`);
+
+      await uploadString(imageRefMusic, selectedFileMusic, 'data_url').then(
+        async (snapshot) => {
+          const downloadURL = await getDownloadURL(imageRefMusic);
+          await updateDoc(doc(db, 'musics', docRef.id), {
+            imageMusic: downloadURL,
           });
         }
       );
@@ -93,6 +106,7 @@ const ModalMusic = () => {
       setloading(false);
       setselectedFile(null);
       setselectedFileArtist(null);
+      setselectedFileMusic(null);
     } else {
       alert('Complete todos los datos porfavor');
     }
@@ -138,6 +152,29 @@ const ModalMusic = () => {
       }
       reader.onload = (readerEvent) => {
         setselectedFileArtist(readerEvent.target.result);
+      };
+    } else {
+      alert('extension del archivo no valido');
+    }
+  };
+
+  const addImageToMusic = (e) => {
+    const file_extension = filePickerRefMusic?.current?.value
+      ?.split('\\')[2]
+      .split('.')[1];
+    if (
+      file_extension === 'png' ||
+      file_extension === 'jpg' ||
+      file_extension === 'jpge' ||
+      file_extension === 'gif' ||
+      file_extension === 'webp'
+    ) {
+      const reader = new FileReader();
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
+      reader.onload = (readerEvent) => {
+        setselectedFileMusic(readerEvent.target.result);
       };
     } else {
       alert('extension del archivo no valido');
@@ -222,8 +259,49 @@ const ModalMusic = () => {
                       as="h3"
                       className="text-lg leading-6 font-medium text-gray-900"
                     >
-                      Sube la musica
+                      {!selectedFile && <span>Sube la musica</span>}
                     </Dialog.Title>
+
+                    {selectedFileMusic ? (
+                      <img
+                        src={selectedFileMusic}
+                        className="w-full h-44 object-contain cursor-pointer"
+                        onClick={() => {
+                          setselectedFileMusic(null);
+                          filePickerRefMusic.current.value = null;
+                        }}
+                        alt="selected image"
+                      />
+                    ) : (
+                      <div
+                        onClick={() => filePickerRefMusic.current.click()}
+                        className="mx-auto mt-5 flex items-center justify-center h-12 w-12 rounded-full
+                      bg-red-100 cursor-pointer"
+                      >
+                        <CameraIcon
+                          className="h-6 w-6 text-red-600"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    )}
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg mt-3 leading-6 font-medium text-gray-900"
+                    >
+                      {!selectedFileMusic && (
+                        <span>Sube la imagen de la cancion</span>
+                      )}
+                    </Dialog.Title>
+
+                    <div>
+                      <input
+                        ref={filePickerRefMusic}
+                        type="file"
+                        hidden
+                        onChange={addImageToMusic}
+                      />
+                    </div>
+                    <div />
 
                     <div>
                       <input
@@ -260,7 +338,7 @@ const ModalMusic = () => {
                       {selectedFileArtist ? (
                         <img
                           src={selectedFileArtist}
-                          className="w-full h-60 object-contain cursor-pointer"
+                          className="w-full h-32 object-contain cursor-pointer"
                           onClick={() => {
                             setselectedFileArtist(null);
                             filePickerRefArtist.current.value = null;
@@ -283,7 +361,9 @@ const ModalMusic = () => {
                         as="h3"
                         className="text-lg mt-3 leading-6 font-medium text-gray-900"
                       >
-                        Sube la imagen del artista
+                        {!selectedFileArtist && (
+                          <span>Sube la imagen del artista</span>
+                        )}
                       </Dialog.Title>
 
                       <div>
@@ -317,6 +397,7 @@ const ModalMusic = () => {
                       disabled={
                         !selectedFile ||
                         !selectedFileArtist ||
+                        !selectedFileMusic ||
                         formValues.title === '' ||
                         formValues.artist === '' ||
                         formValues.genre === ''

@@ -16,7 +16,7 @@ export default function Home() {
           </h2>
           <br />
           <p className="text-xs sm:text-sm flex justify-center -mt-4 mb-6 font-semibold text-purple-600">
-            Disfrute de toda nuestra variedad
+            Disfrute de toda nuestra variedad de generos musicales
           </p>
         </div>
         <div>

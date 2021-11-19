@@ -5,6 +5,7 @@ import { PlusCircleIcon } from '@heroicons/react/outline';
 import { ModalGenreContext } from '../context/ModalGenreContext';
 import { collection, onSnapshot } from '@firebase/firestore';
 import { db } from '../firebase';
+import Link from 'next/link';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -23,7 +24,7 @@ const CategoriesLayout = () => {
   );
 
   return (
-    <Menu as="div" className="hidden md:inline-block relative  text-left">
+    <Menu as="div" className="md:inline-block relative  text-left">
       <div>
         <Menu.Button
           className="inline-flex justify-center w-full  py-2
@@ -54,15 +55,16 @@ const CategoriesLayout = () => {
             {genres.map((genre) => (
               <Menu.Item key={genre.id}>
                 {({ active }) => (
-                  <a
-                    href="#"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm'
-                    )}
-                  >
-                    {genre.data().title}
-                  </a>
+                  <Link href={`/${genre.data().title}`}>
+                    <a
+                      className={classNames(
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        'block px-4 py-2 text-sm'
+                      )}
+                    >
+                      {genre.data().title}
+                    </a>
+                  </Link>
                 )}
               </Menu.Item>
             ))}
