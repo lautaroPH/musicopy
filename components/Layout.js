@@ -3,10 +3,7 @@ import Head from 'next/head';
 
 const Layout = ({ children, title, description }) => {
   return (
-    <div
-      className="h-screen 
-    overflow-y-scroll scrollbar-hide"
-    >
+    <div className="h-screen overflow-y-scroll">
       <Head>
         <title>{title ? `${title} - MusiCopy` : 'MusiCopy'}</title>
         {description && <meta name="description" content={description} />}
