@@ -8,7 +8,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from '@firebase/firestore';
-import { db, storage } from '../firebase';
+import { db, storage } from '../firebase/firebase';
 // import { useSession } from 'next-auth/react';
 import { getDownloadURL, ref, uploadString } from '@firebase/storage';
 import { ModalGenreContext } from '../context/ModalGenreContext';

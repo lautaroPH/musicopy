@@ -2,7 +2,6 @@ import {
   collection,
   getDocs,
   limit,
-  onSnapshot,
   orderBy,
   query,
   startAfter,
@@ -10,14 +9,14 @@ import {
 } from '@firebase/firestore';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react';
-import Layout from '../../components/Layout';
 import ModalGenre from '../../components/ModalGenre';
 import ModalMusic from '../../components/ModalMusic';
 import MusicList from '../../components/MusicList';
-import { db } from '../../firebase';
+import { db } from '../../firebase/firebase';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Header from '../../components/Header';
 import Head from 'next/dist/shared/lib/head';
+import Link from 'next/dist/client/link';
 
 const genreList = () => {
   const [musics, setMusics] = useState([]);
@@ -26,7 +25,7 @@ const genreList = () => {
   const [hasMore, setHasMore] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(true);
 
-  const genero = router.asPath.split('/')[1];
+  const genero = router.query.genre || '';
 
   useEffect(async () => {
     const first = query(
@@ -93,17 +92,19 @@ const genreList = () => {
               </h3>
             ) : (
               musics?.map((music) => (
-                <div key={music.id}>
-                  <MusicList
-                    id={music.id}
-                    artist={music.data().artist}
-                    genre={music.data().genre}
-                    image={music.data().image}
-                    imageMusic={music.data().imageMusic}
-                    timestamp={music.data().timestamp}
-                    title={music.data().title}
-                  />
-                </div>
+                <Link href={`/music/${music.id}`} key={music.id}>
+                  <div>
+                    <MusicList
+                      id={music.id}
+                      artist={music.data().artist}
+                      genre={music.data().genre}
+                      image={music.data().image}
+                      imageMusic={music.data().imageMusic}
+                      timestamp={music.data().timestamp}
+                      title={music.data().title}
+                    />
+                  </div>
+                </Link>
               ))
             )}
           </div>

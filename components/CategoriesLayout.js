@@ -4,7 +4,7 @@ import { ChevronDownIcon } from '@heroicons/react/solid';
 import { PlusCircleIcon } from '@heroicons/react/outline';
 import { ModalGenreContext } from '../context/ModalGenreContext';
 import { collection, onSnapshot } from '@firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../firebase/firebase';
 import Link from 'next/link';
 
 function classNames(...classes) {
