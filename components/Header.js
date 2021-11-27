@@ -4,12 +4,10 @@ import { useContext, useState } from 'react';
 import { ModalMusicContext } from '../context/ModalMusicContext';
 import CategoriesLayout from './CategoriesLayout';
 import Link from 'next/dist/client/link';
-import { useRouter } from 'next/dist/client/router';
 
 const Header = ({ fixed }) => {
   const { setOpenModalMusic } = useContext(ModalMusicContext);
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const router = useRouter();
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-emerald-500 shadow-sm border-b bg-white top-0 z-50 mb-3">
@@ -79,7 +77,7 @@ const Header = ({ fixed }) => {
                   onClick={() => {
                     setOpenModalMusic(true);
                     setNavbarOpen(false);
-                    router.replace('/');
+                    // router.replace('/');
                   }}
                   className="navBtn text-purple-600 md:inline-flex hover:scale-125"
                 ></PlusCircleIcon>

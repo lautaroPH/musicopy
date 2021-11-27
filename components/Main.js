@@ -1,28 +1,12 @@
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import {
-  ChevronUpIcon,
-  MinusIcon,
-  PauseIcon,
-  PlayIcon,
-} from '@heroicons/react/outline';
-import { useEffect, useState } from 'react';
-import {
-  collection,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-} from '@firebase/firestore';
-import { db } from '../firebase';
-import Link from 'next/link';
+import { Menu } from '@headlessui/react';
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
+import { useEffect, useState } from 'react';
+import { collection, onSnapshot } from '@firebase/firestore';
+import Link from 'next/link';
+import { db } from '../firebase/firebase';
 
 const Main = () => {
   const [genres, setGenres] = useState([]);
-  const [musics, setMusics] = useState([]);
 
   useEffect(
     () =>

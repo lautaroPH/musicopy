@@ -8,10 +8,10 @@ import {
   serverTimestamp,
   updateDoc,
 } from '@firebase/firestore';
-import { db, storage } from '../firebase/firebase';
-// import { useSession } from 'next-auth/react';
 import { getDownloadURL, ref, uploadString } from '@firebase/storage';
 import { ModalGenreContext } from '../context/ModalGenreContext';
+import { db, storage } from '../firebase/firebase';
+import { useRouter } from 'next/dist/client/router';
 
 const initEvent = {
   title: '',
@@ -19,6 +19,7 @@ const initEvent = {
 
 const ModalGenre = () => {
   //   const { data: session } = useSession();
+  const router = useRouter();
   const { open, setOpen } = useContext(ModalGenreContext);
   const filePickerRef = useRef(null);
   const titleRef = useRef(null);
@@ -54,6 +55,7 @@ const ModalGenre = () => {
           });
         }
       );
+      router.push('/');
       setOpen(false);
       setloading(false);
       setselectedFile(null);

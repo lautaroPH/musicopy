@@ -14,6 +14,7 @@ import { db, storage } from '../firebase/firebase';
 import { getDownloadURL, ref, uploadString } from '@firebase/storage';
 import { ModalMusicContext } from '../context/ModalMusicContext';
 import { AudioPlayer } from './AudioPlayer';
+import { useRouter } from 'next/dist/client/router';
 
 const initEvent = {
   title: '',
@@ -23,6 +24,7 @@ const initEvent = {
 
 const ModalMusic = () => {
   //   const { data: session } = useSession();
+  const router = useRouter();
   const { openModalMusic, setOpenModalMusic } = useContext(ModalMusicContext);
   const filePickerRef = useRef(null);
   const filePickerRefArtist = useRef(null);
@@ -102,11 +104,15 @@ const ModalMusic = () => {
         }
       );
 
+      router.push(`/music/${docRef.id}`);
       setOpenModalMusic(false);
       setloading(false);
       setselectedFile(null);
       setselectedFileArtist(null);
       setselectedFileMusic(null);
+      titleRef = null;
+      artistRef = null;
+      genreRef = null;
     } else {
       alert('Complete todos los datos porfavor');
     }
@@ -129,6 +135,7 @@ const ModalMusic = () => {
       }
       reader.onload = (readerEvent) => {
         setselectedFile(readerEvent.target.result);
+        console.log(selectedFile);
       };
     } else {
       alert('extension del archivo no valido');

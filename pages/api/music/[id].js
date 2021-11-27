@@ -1,25 +1,23 @@
-import { firestore } from 'firebase/admin';
+import { firestore } from '../../../firebase/admin';
 
-export default (req, res) => {
-  const { query } = req;
+export default (request, response) => {
+  const { query } = request;
   const { id } = query;
 
   firestore
-    .collection('devits')
+    .collection('musics')
     .doc(id)
     .get()
     .then((doc) => {
       const data = doc.data();
       const id = doc.id;
-      const { createdAt } = data;
-
-      res.json({
-        ...data,
-        id,
-        createdAt: +createdAt.toDate(),
-      });
-    })
-    .catch(() => {
-      res.status(404).end();
+      if (data !== undefined) {
+        response.json({
+          ...data,
+          id,
+        });
+      } else {
+        response.status(404).end();
+      }
     });
 };

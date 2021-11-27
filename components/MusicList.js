@@ -10,7 +10,7 @@ const MusicList = ({
   const date = new Date(parseInt(timestamp?.seconds * 1000));
   const normalizedTimestamp = new Intl.DateTimeFormat('es-ES').format(date);
   return (
-    <div className="flex shadow-md border-r" key={id}>
+    <div className="flex shadow-md border-r " key={id}>
       <div className="">
         <img className="p-3 h-36 w-36" src={imageMusic} alt={title} />
       </div>
@@ -30,7 +30,7 @@ const MusicList = ({
         />
         <p>
           <b>Fecha: </b>
-          {normalizedTimestamp}
+          <time>{normalizedTimestamp}</time>
         </p>
       </div>
     </div>

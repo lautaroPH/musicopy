@@ -35,8 +35,8 @@ const genreList = () => {
       limit(15)
     );
     const documentSnapshots = await getDocs(first);
-    setMusics(documentSnapshots.docs);
 
+    setMusics(documentSnapshots.docs);
     setNoMusics(documentSnapshots.empty);
   }, [db, genero]);
 
@@ -93,7 +93,7 @@ const genreList = () => {
             ) : (
               musics?.map((music) => (
                 <Link href={`/music/${music.id}`} key={music.id}>
-                  <div>
+                  <div className="cursor-pointer transition-all duration-150 ease-out hover:scale-110">
                     <MusicList
                       id={music.id}
                       artist={music.data().artist}

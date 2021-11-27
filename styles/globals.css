@@ -27,3 +27,221 @@ body {
 .border-ns {
     border: none !important;
 }
+
+.oculto {
+    display: none;
+}
+
+.reproductor {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em 1em;
+}
+
+.reproductor button {
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.5em;
+}
+
+.reproductor .cancion {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-basis: 10em;
+}
+
+.reproductor .reproduccion {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+    flex-basis: 20em;
+    justify-content: center;
+}
+
+.reproductor .reproduccion__progreso {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+.play {
+    position: relative;
+    height: 2em;
+}
+
+.progreso {
+    --bar-bg: #efefef;
+    --seek-before-width: 0;
+    --seek-before-color: #6D28D9;
+    --knobby: #4409a3;
+    --selectedKnobby: #a831c9;
+    appearance: none;
+    border: solid 2px #b2b2b2;
+    background-color: #efefef;
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 13px;
+    outline: none;
+}
+
+/* progress bar - safari */
+
+.progreso::-webkit-slider-runnable-track {
+    background: var(--bar-bg);
+    ;
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 11px;
+    outline: none;
+}
+
+/* progress bar - firefox */
+
+.progreso::-moz-range-track {
+    background: var(--bar-bg);
+    ;
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 11px;
+    outline: none;
+}
+
+.progreso::-moz-focus-outer {
+    border: 0;
+}
+
+/* progress bar - chrome and safari */
+
+.progreso::before {
+    content: '';
+    height: 11px;
+    width: var(--seek-before-width);
+    background-color: var(--seek-before-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: -1px;
+    left: 1px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+/* progress bar - firefox */
+
+.progreso::-moz-range-progress {
+    background-color: var(--seek-before-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 11px;
+}
+
+/* knobby - chrome and safari */
+
+.progreso::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--knobby) !important;
+    cursor: pointer;
+    position: relative;
+    margin: -2px 0 0 0;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+/* knobby while dragging - chrome and safari */
+
+.progreso:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+    background: var(--selectedKnobby);
+}
+
+/* knobby - firefox */
+
+.progreso::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: transparent;
+    background-color: var(--knobby);
+    cursor: pointer;
+    position: relative;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+/* knobby while dragging - firefox */
+
+.progreso:active::-moz-range-thumb {
+    transform: scale(1.2);
+    background: var(--selectedKnobby);
+}
+
+.reproductor .reproduccion__controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.reproductor .controles__reproduccion {
+    display: flex;
+    gap: 0.5em;
+    flex-grow: 1;
+    justify-content: center;
+    margin-left: 3em;
+}
+
+.reproductor .controles__volumen {
+    position: relative;
+}
+
+.reproductor .controles__volumen button {
+    width: 1.5em;
+    margin-right: -20px;
+}
+
+.reproductor .controles__volumen input {
+    -webkit-appearance: none;
+    position: absolute;
+    background: #efefef;
+    width: 100px;
+    transform-origin: left;
+    transform: rotate(-90deg) translateY(1em) translateX(1.25em);
+    height: 8px;
+    border-radius: 10px;
+    outline: none;
+    border: solid 1px #b2b2b2;
+    overflow: hidden;
+}
+
+.reproductor .controles__volumen input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 10px;
+    width: 10px;
+    background: #6D28D9;
+    cursor: pointer;
+    box-shadow: -400px 0 0px 400px #4409a3;
+}
+
+.reproductor input[type="range"] {
+    cursor: pointer !important;
+}
+
+.reproductor input[type="range"]:active {
+    cursor: grabbing !important;
+}
