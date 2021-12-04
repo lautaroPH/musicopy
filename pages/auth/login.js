@@ -4,14 +4,15 @@ import { useEffect } from 'react';
 import Layout from '../../components/Layout';
 
 const login = ({ providers }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+
   const router = useRouter();
 
-  useEffect(() => {
-    if (session) {
-      router.push('/');
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push('/');
+  //   }
+  // }, [session]);
 
   return (
     <Layout
