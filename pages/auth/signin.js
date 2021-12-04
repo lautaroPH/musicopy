@@ -3,7 +3,7 @@ import { useRouter } from 'next/dist/client/router';
 import { useEffect } from 'react';
 import Layout from '../../components/Layout';
 
-const login = ({ providers }) => {
+const signin = ({ providers }) => {
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -16,7 +16,7 @@ const login = ({ providers }) => {
 
   return (
     <Layout
-      title="Login"
+      title="Signin"
       description="Registrate o logueate con tu cuenta de google"
     >
       <div
@@ -40,7 +40,7 @@ const login = ({ providers }) => {
   );
 };
 
-export default login;
+export default signin;
 
 export async function getServerSideProps() {
   const providers = await getProviders();

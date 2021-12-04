@@ -95,7 +95,7 @@ const Header = ({ fixed }) => {
                   </>
                 ) : (
                   <>
-                    <Link href="/auth/login">
+                    <Link href="/auth/signin">
                       <button className=" text-purple-600 font-semibold text-sm md:text-lg ">
                         <LoginIcon className="lg:hidden navBtn h-7 mr-2 mb-1 text-purple-600 hover:scale-125" />
                         <span className="hidden lg:inline-flex">
