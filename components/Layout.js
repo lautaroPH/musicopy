@@ -9,7 +9,6 @@ const Layout = ({ children, title, description }) => {
         {description && <meta name="description" content={description} />}
       </Head>
       <Header />
-
       <div>
         <main>{children}</main>
       </div>

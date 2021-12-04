@@ -192,7 +192,9 @@ const ModalGenre = () => {
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="button"
-                    disabled={!selectedFile || formValues.title === ''}
+                    disabled={
+                      !selectedFile || formValues.title === '' || loading
+                    }
                     className="inline-flex justify-center w-full rounded-md border 
                       border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base 
                       font-medium text-white hover:bg-blue-700 focus:outline-none 

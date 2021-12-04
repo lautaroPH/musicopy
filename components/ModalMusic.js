@@ -71,7 +71,7 @@ const ModalMusic = () => {
         timestamp: serverTimestamp(),
       });
 
-      const audioRef = ref(storage, `musics/${docRef.id}/audio`);
+      const audioRef = ref(storage, `musics/${docRef.id}/audio.mp3`);
 
       await uploadString(audioRef, selectedFile, 'data_url').then(
         async (snapshot) => {
@@ -127,7 +127,8 @@ const ModalMusic = () => {
       file_extension === 'mp4' ||
       file_extension === 'm4a' ||
       file_extension === 'wav' ||
-      file_extension === 'wma'
+      file_extension === 'wma' ||
+      file_extension === 'webp'
     ) {
       const reader = new FileReader();
       if (e.target.files[0]) {
@@ -135,7 +136,6 @@ const ModalMusic = () => {
       }
       reader.onload = (readerEvent) => {
         setselectedFile(readerEvent.target.result);
-        console.log(selectedFile);
       };
     } else {
       alert('extension del archivo no valido');
@@ -407,7 +407,8 @@ const ModalMusic = () => {
                         !selectedFileMusic ||
                         formValues.title === '' ||
                         formValues.artist === '' ||
-                        formValues.genre === ''
+                        formValues.genre === '' ||
+                        loading
                       }
                       className="inline-flex justify-center w-full rounded-md border 
                       border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base 

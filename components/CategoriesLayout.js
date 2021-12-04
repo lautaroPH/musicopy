@@ -6,12 +6,15 @@ import { ModalGenreContext } from '../context/ModalGenreContext';
 import { collection, onSnapshot } from '@firebase/firestore';
 import Link from 'next/link';
 import { db } from '../firebase/firebase';
+import { useSession } from 'next-auth/react';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const CategoriesLayout = () => {
+  const { data: session } = useSession();
+
   const { setOpen } = useContext(ModalGenreContext);
   const [genres, setGenres] = useState([]);
 
@@ -27,7 +30,7 @@ const CategoriesLayout = () => {
     <Menu as="div" className="md:inline-block relative  text-left">
       <div>
         <Menu.Button
-          className="inline-flex justify-center w-full  py-2
+          className="inline-flex  justify-center w-full  py-2
         text-purple-600 font-semibold"
         >
           Categorias
@@ -68,16 +71,18 @@ const CategoriesLayout = () => {
                 )}
               </Menu.Item>
             ))}
-            <Menu.Item>
-              {({ active }) => (
-                <span href="#" className="block px-4 py-2 text-sm border-t-2">
-                  <PlusCircleIcon
-                    onClick={() => setOpen(true)}
-                    className="block h-7 w-full navBtn hover:scale-125"
-                  />
-                </span>
-              )}
-            </Menu.Item>
+            {session?.user?.name === 'Lautaro Pérez herrera' && (
+              <Menu.Item>
+                {({ active }) => (
+                  <span href="#" className="block px-4 py-2 text-sm border-t-2">
+                    <PlusCircleIcon
+                      onClick={() => setOpen(true)}
+                      className="block h-7 w-full navBtn hover:scale-125"
+                    />
+                  </span>
+                )}
+              </Menu.Item>
+            )}
           </div>
         </Menu.Items>
       </Transition>

@@ -23,7 +23,7 @@ const genreList = () => {
   const [noMusics, setNoMusics] = useState(false);
   const router = useRouter();
   const [hasMore, setHasMore] = useState(true);
-  const [hasNextPage, setHasNextPage] = useState(true);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
   const genero = router.query.genre || '';
 
@@ -57,6 +57,9 @@ const genreList = () => {
 
       setMusics((music) => [...music, ...documentSnapshotsNew.docs]);
       setHasNextPage(false);
+      if (documentSnapshotsNew.docs.length === 0) {
+        setHasMore(false);
+      }
     }
   };
   return (
@@ -78,7 +81,9 @@ const genreList = () => {
           next={getMorePost}
           hasMore={hasMore}
           loader={hasNextPage && <h3 className="text-center"> Cargando...</h3>}
-          endMessage={<h3>se ternb</h3>}
+          endMessage={
+            <h3 className="text-center">No hay mas musicas para mostrar</h3>
+          }
         >
           <div
             className="grid gap-6 grid-cols-1 sm:grid-cols-2  md:max-w-3xl
